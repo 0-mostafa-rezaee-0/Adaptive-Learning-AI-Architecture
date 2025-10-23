@@ -1,0 +1,210 @@
+\documentclass[12pt]{article}
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{setspace}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{titlesec}
+\usepackage{lipsum}
+\usepackage{graphicx}
+\usepackage{tcolorbox}
+\usepackage{tabularx}
+
+\setstretch{1.2}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue,
+  urlcolor=cyan
+}
+
+\title{Adaptive Learning System Roadmap for Higher Education}
+\author{Principal AI Architect Report}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\newpage
+
+\section{Executive Summary}
+\begin{itemize}[leftmargin=1.2cm]
+  \item \textbf{Approach:} Adopt a hybrid Retrieval-Augmented Generation (RAG) architecture enhanced by adaptive bandit learning and fine-tuned pedagogical modules.
+  \item \textbf{Grounding:} RAG ensures factual accuracy and traceability by generating answers only from retrieved trusted content.
+  \item \textbf{Adaptivity:} A contextual bandit policy personalizes content sequencing based on demonstrated learning gains.
+  \item \textbf{Fine-Tuning:} LoRA/PEFT adapters are used for style, grading, and distractor generation without retraining large models.
+  \item \textbf{Cold-Start Resilience:} Zero-shot recommendations use semantic and metadata heuristics until live feedback accumulates.
+  \item \textbf{Learning First:} Rewards and KPIs focus on \emph{learning gains}, not click-through rates or dwell time.
+  \item \textbf{Incremental Delivery:} A 12-week roadmap yields measurable outcomes each 2-week sprint.
+  \item \textbf{Safety \& Governance:} Grounded responses, content length caps, privacy compliance (FERPA/GDPR).
+  \item \textbf{Modularity:} Each layer—retrieval, pedagogy, analytics, and orchestration—is independently upgradable.
+  \item \textbf{Outcome:} A scalable, measurable, and pedagogically sound adaptive learning engine.
+\end{itemize}
+
+\section{Architecture Options Comparison}
+
+\subsection*{Option A: RAG-first + Reranking + Agentic Orchestration}
+\begin{itemize}[leftmargin=1.2cm]
+  \item \textbf{Core Components:} Hybrid BM25 + dense vector search, cross-encoder reranking, orchestrator managing retrieval and grounding.
+  \item \textbf{Cost:} Low initial cost, no training required. 
+  \item \textbf{Latency:} Moderate (2–5s end-to-end).
+  \item \textbf{Data Needs:} Minimal; operates cold-start via semantic retrieval.
+  \item \textbf{Expected Learning Impact:} Accurate and grounded responses; low personalization.
+  \item \textbf{Risks:} Static experience; retrieval quality depends on corpus coverage.
+  \item \textbf{Team Fit:} Excellent; matches existing agentic-AI skills.
+\end{itemize}
+
+\subsection*{Option B: Lightweight Fine-Tuning (LoRA/PEFT) + RAG}
+\begin{itemize}[leftmargin=1.2cm]
+  \item \textbf{Core Components:} Adds small LoRA adapters for tone, pedagogy, and domain vocabulary.
+  \item \textbf{Cost:} Moderate; one-time training of adapters on few hundred samples.
+  \item \textbf{Latency:} Similar to base LLM; negligible overhead.
+  \item \textbf{Data Needs:} Low to medium (synthetic data or expert-labeled).
+  \item \textbf{Expected Learning Impact:} Improves consistency and educational clarity.
+  \item \textbf{Risks:} Requires data governance and evaluation; small risk of drift.
+  \item \textbf{Team Fit:} Strong; within DS team’s expertise.
+\end{itemize}
+
+\subsection*{Option C: RL/Bandits for Content Selection on RAG Baseline}
+\begin{itemize}[leftmargin=1.2cm]
+  \item \textbf{Core Components:} Contextual bandit (UCB/Thompson) learns to select snippets maximizing learning gain.
+  \item \textbf{Cost:} Moderate; online training infra required.
+  \item \textbf{Latency:} Very low runtime cost (ms).
+  \item \textbf{Data Needs:} Requires ongoing interaction data; starts with safe heuristic policy.
+  \item \textbf{Expected Learning Impact:} High; adaptivity yields better time-to-mastery.
+  \item \textbf{Risks:} Reward mis-specification; exploration risks mitigated via constraints.
+  \item \textbf{Team Fit:} Excellent; RL expertise present.
+\end{itemize}
+
+\subsection*{Option D: Fully Fine-Tuned Task-Specific Models}
+\begin{itemize}[leftmargin=1.2cm]
+  \item \textbf{Core Components:} Individual small models for QG, grading, and difficulty estimation.
+  \item \textbf{Cost:} High total dev cost across multiple pipelines.
+  \item \textbf{Latency:} Lower per-model but sequential execution adds up.
+  \item \textbf{Data Needs:} High (thousands of labeled examples per subtask).
+  \item \textbf{Expected Learning Impact:} Moderate to good but limited adaptivity.
+  \item \textbf{Risks:} Maintenance overhead; model drift; integration burden.
+  \item \textbf{Team Fit:} Feasible but resource-intensive.
+\end{itemize}
+
+\textbf{Recommendation:} Adopt a hybrid of A + B + C.
+
+\section{Final Recommended Architecture}
+
+\subsection*{Overview Diagram}
+\begin{verbatim}
+[User Query] 
+   ↓ 
+[Orchestrator Agent] → [Retrieval Layer: BM25 + Dense Search]
+   ↓ 
+[Cross-Encoder Reranker + MMR Diversification]
+   ↓ 
+[Minimal Snippet Selector (ASR/PDF Segmenter)]
+   ↓ 
+[Pedagogical Layer: QG + Hints + Grading]
+   ↓ 
+[Assessment (IRT-based θ Estimation)]
+   ↓ 
+[Bandit Policy selects Next Action or Resource]
+   ↺ Feedback loop
+\end{verbatim}
+
+\subsection*{Core Layers}
+\begin{itemize}[leftmargin=1.2cm]
+  \item \textbf{Retrieval:} Hybrid search (BM25 + embeddings). Chunk size 300–500 tokens with 20–30\% overlap. Rerank via cross-encoder and MMR for diversity.
+  \item \textbf{Content Minimization:} ASR + semantic segmentation for videos, section extraction for PDFs. Hard cap: videos $\leq$5 min, PDFs $\leq$3 pages. Define sufficiency score = semantic coverage / duration.
+  \item \textbf{Pedagogical Layer:} Generates formative questions (aligned with Bloom’s taxonomy), hints, distractors, and rubrics. Uses self-consistency decoding for reliability.
+  \item \textbf{Assessment \& Analytics:} IRT-based ability $\theta$ estimation (2PL/3PL), item calibration, difficulty drift detection, learning gain tracking.
+  \item \textbf{Agentic Orchestration:} A planner coordinates retrieval, pedagogy, evaluation, and next-step decisions based on observed performance.
+\end{itemize}
+
+\section{Data Plan: From Cold Start to Flywheel}
+\begin{itemize}[leftmargin=1.2cm]
+  \item \textbf{Cold Start:} Heuristics + metadata filters, ASR semantic coverage, weak labels from Q\&A overlap, and teacher-in-the-loop bootstrapping.
+  \item \textbf{Rapid Labeling:} Human rubric for ``best minimal resource''; inter-rater agreement monitoring; active learning loops for new labels.
+  \item \textbf{Leverage Historical Logs:} Use existing Q\&A/assessment data to pretrain question generator, grader, and difficulty estimation.
+  \item \textbf{Flywheel:} Logged interactions → reward signals → updated bandit policy → improved recommendations → more data.
+\end{itemize}
+
+\section{Metrics \& Evaluation}
+\begin{itemize}[leftmargin=1.2cm]
+  \item \textbf{Retrieval Quality:} nDCG@k, Recall@k, Coverage, Time-to-first-useful-resource.
+  \item \textbf{Minimality:} Median resource length, Overkill rate (\% exceeding limits), Compression ratio.
+  \item \textbf{Question Quality:} Expert rubric (clarity, Bloom level), pass@k, factuality alignment.
+  \item \textbf{Assessment Quality:} Item discrimination (a), difficulty (b), guessing (c), test information, reliability, $\theta$ stability.
+  \item \textbf{Learning Outcomes:} $\Delta\theta$, normalized gain, mastery progression, time-to-mastery.
+  \item \textbf{Safety:} Hallucination rate, refusal accuracy, bias/fairness checks.
+\end{itemize}
+
+\section{12-Week Stepwise Roadmap}
+\begin{enumerate}[leftmargin=1.2cm]
+  \item \textbf{M1 (Weeks 1–2):} RAG baseline with minimality constraints.  
+    \emph{Acceptance:} nDCG@3 $\geq$ 0.7, overkill rate $<$ 20\%.
+  \item \textbf{M2 (Weeks 3–4):} Add cross-encoder reranker, ASR/PDF segmenters, JSON outputs.  
+    \emph{Acceptance:} nDCG@3 $\geq$ 0.8, median length $\leq$ 3 min, hallucinations $<$1\%.
+  \item \textbf{M3 (Weeks 5–6):} Pedagogy tools (QG, grading, hints) + IRT-lite calibration.  
+    \emph{Acceptance:} rubric scores $\geq$ 4/5; stable item params.
+  \item \textbf{M4 (Weeks 7–8):} Contextual bandit for content selection.  
+    \emph{Acceptance:} $\Delta\theta$ proxy uplift $\geq$ 10\% with overkill unchanged.
+  \item \textbf{M5 (Weeks 9–10):} LoRA fine-tunes for pedagogy style, grading consistency.  
+    \emph{Acceptance:} improved expert scores, consistent grading, no latency penalty.
+  \item \textbf{M6 (Weeks 11–12):} Production hardening (safety, bias, compliance).  
+    \emph{Acceptance:} privacy checks, dashboard metrics stable, ready for release.
+\end{enumerate}
+
+\section{Reinforcement Learning Design}
+
+\[
+R = w_1(\Delta \theta) + w_2(\text{Minimality Bonus}) 
+    - w_3(\text{Hallucination Penalty}) 
+    - w_4(\text{Latency/Cost Penalty})
+\]
+
+\begin{itemize}[leftmargin=1.2cm]
+  \item \textbf{Algorithm:} Start with contextual bandits (Thompson Sampling or LinUCB) using retrieval candidates as arms.
+  \item \textbf{Reward Inputs:} Post-quiz correctness uplift (proxy for $\Delta \theta$), content brevity bonus, safety penalties.
+  \item \textbf{Evaluation:} Off-policy via IPS/DR estimators on logged data.
+  \item \textbf{Safety:} Constrain arms by length and confidence; allow uncertainty-aware deferrals.
+  \item \textbf{Escalation:} Move to full RL only after sufficient data and plateaued bandit performance.
+\end{itemize}
+
+\section{Fine-Tuning Policy}
+\begin{itemize}[leftmargin=1.2cm]
+  \item \textbf{No full-model fine-tuning early.} Focus on LoRA/PEFT for modular adaptability.
+  \item \textbf{Candidate modules:} question generator, rubric grader, distractor generator, short-explainer style.
+  \item \textbf{Entry Criteria:} $N_k$ high-quality samples, plateaued prompt-only results, projected inference savings, governance approval.
+  \item \textbf{Migration Plan:} Adapter transfer to new base models; versioned adapters; fallback to prompt baseline.
+\end{itemize}
+
+\section{Risks \& Mitigations}
+\begin{itemize}[leftmargin=1.2cm]
+  \item \textbf{Cold-start:} Mitigate with heuristics + teacher validation.
+  \item \textbf{Over-long Resources:} Enforce hard caps; prefer coverage-per-minute ranking.
+  \item \textbf{Hallucinations:} Grounded verification and refusal policy.
+  \item \textbf{Difficulty Drift:} Regular IRT recalibration and anchor items.
+  \item \textbf{Privacy:} Encrypted logs, role-based access, FERPA/GDPR compliance.
+  \item \textbf{Bias:} Diversity checks and fairness audits.
+  \item \textbf{Model Drift:} Continuous monitoring and version control for adapters.
+\end{itemize}
+
+\section{Deliverables per Milestone}
+\begin{itemize}[leftmargin=1.2cm]
+  \item \textbf{M1:} Prototype notebook, data/model cards, baseline metrics, red-team report.
+  \item \textbf{M2:} Updated pipeline with reranker \& segmenter, JSON outputs, new evaluation report.
+  \item \textbf{M3:} Pedagogy module code, prompt library, initial IRT calibration, expert rubric results.
+  \item \textbf{M4:} Bandit module + off-policy eval notebook, policy performance report.
+  \item \textbf{M5:} Fine-tuned adapters, A/B test report, model cards for tuned modules.
+  \item \textbf{M6:} Compliance report, dashboards, continuous-learning plan, final evaluation.
+\end{itemize}
+
+\subsection*{First 14 Days Task List}
+\begin{enumerate}[leftmargin=1.2cm]
+  \item Content ingestion and chunking (video + PDF).
+  \item Implement hybrid retrieval and baseline LLM prompt.
+  \item Build test query set and compute nDCG/Recall metrics.
+  \item Prototype end-to-end RAG QA flow.
+  \item Document M1 findings and prepare for M2 integration.
+\end{enumerate}
+
+\end{document}
