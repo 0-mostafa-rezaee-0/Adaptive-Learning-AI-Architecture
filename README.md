@@ -4,13 +4,13 @@ This will create your own copy of this project, which you can modify freely — 
 
 ---
 
-<!-- <p align="center">
+<p align="center">
   <img src="images/banner.png" alt="banner" width="75%">
-</p> -->
+</p>
 
 <h1 align="center">Adaptive Learning AI Architecture</h1>
 
-
+Evidence-backed adaptive learning system architecture featuring RAG-first approach with contextual bandit optimization, IRT-based learning measurement, and comprehensive 12-week implementation roadmap for scalable higher education solutions.
 
 ## 1. Quick Start
 
