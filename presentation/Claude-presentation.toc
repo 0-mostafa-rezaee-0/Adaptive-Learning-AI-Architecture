@@ -1,0 +1,11 @@
+\beamer@sectionintoc {1}{Executive Summary}{3}{0}{1}
+\beamer@sectionintoc {2}{Architecture Options Comparison}{5}{0}{2}
+\beamer@sectionintoc {3}{Final Recommended Architecture}{8}{0}{3}
+\beamer@sectionintoc {4}{Key Components}{10}{0}{4}
+\beamer@sectionintoc {5}{Bandit Optimization}{14}{0}{5}
+\beamer@sectionintoc {6}{Implementation Roadmap}{16}{0}{6}
+\beamer@sectionintoc {7}{Data Strategy}{19}{0}{7}
+\beamer@sectionintoc {8}{Metrics \& Evaluation}{21}{0}{8}
+\beamer@sectionintoc {9}{Risks \& Mitigations}{23}{0}{9}
+\beamer@sectionintoc {10}{Deliverables \& Timeline}{25}{0}{10}
+\beamer@sectionintoc {11}{Conclusion}{27}{0}{11}
