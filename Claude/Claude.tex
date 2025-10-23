@@ -11,7 +11,7 @@
 \usepackage{longtable}
 \usepackage{array}
 \usepackage{enumitem}
-\usepackage{hyperref}
+\usepackage[hidelinks]{hyperref}
 \usepackage{xcolor}
 \usepackage{tikz}
 \usetikzlibrary{shapes,arrows,positioning,fit,backgrounds}
@@ -32,8 +32,8 @@
 \date{\today}
 
 % Custom commands
-\newcommand{\milestone}[1]{\textbf{#1}}
-\newcommand{\metric}[1]{\texttt{#1}}
+\newcommand{\milestone}[1]{\textbf{\#1}}
+\newcommand{\metric}[1]{\texttt{\#1}}
 
 \begin{document}
 
@@ -46,7 +46,7 @@ This document presents a comprehensive, incremental architecture for an adaptive
 \tableofcontents
 \newpage
 
-\section{Executive Summary}
+\section{Executive Summary}\label{sec:executive-summary}
 
 \subsection{Chosen Approach and Rationale}
 
@@ -770,15 +770,15 @@ The recommended architecture is a modular, layered system that combines:
 
 We have:
 \begin{itemize}
-\item ✅ Content corpus (videos, PDFs) with metadata (title, topic, duration/length)
-\item ✅ Historical Q\&A logs (student questions, instructor answers)
-\item ✅ Historical assessment data (questions, responses, correctness)
+\item $\checkmark$ Content corpus (videos, PDFs) with metadata (title, topic, duration/length)
+\item $\checkmark$ Historical Q\&A logs (student questions, instructor answers)
+\item $\checkmark$ Historical assessment data (questions, responses, correctness)
 \end{itemize}
 
 We lack:
 \begin{itemize}
-\item ❌ Explicit labels: "For query Q, resource R is the best/shortest/most relevant"
-\item ❌ Implicit feedback: clicks, dwell time, learner ratings on recommended content
+\item $\times$ Explicit labels: "For query Q, resource R is the best/shortest/most relevant"
+\item $\times$ Implicit feedback: clicks, dwell time, learner ratings on recommended content
 \end{itemize}
 
 \subsection{Cold-Start Strategy (Weeks 1--4)}
@@ -1456,7 +1456,7 @@ M6 (Production) & All above + Safety metrics, P95 latency, Cost/learner & Halluc
 \item Functional RAG API: \texttt{POST /retrieve} (query $\rightarrow$ top-3 resources)
 \item Evaluation report: Metrics table, example retrievals, failure analysis
 \item Jupyter notebook: Reproducible eval pipeline
-\item Data card: Content corpus stats (# videos, PDFs, total duration/pages)
+\item Data card: Content corpus stats (\# videos, PDFs, total duration/pages)
 \end{itemize}
 
 \subsubsection{Acceptance Criteria}
@@ -2509,7 +2509,7 @@ Bias \& fairness & Medium & Bias audit, diverse data, counterfactual testing, fa
 
 \textbf{Data \& Models:}
 \begin{itemize}
-\item Data card: Content corpus stats (# videos/PDFs, total duration/pages, metadata schema)
+\item Data card: Content corpus stats (\# videos/PDFs, total duration/pages, metadata schema)
 \item Embedding model: OpenAI \texttt{text-embedding-3-large} or self-hosted \texttt{bge-large-en-v1.5}
 \item BM25 index: Elasticsearch or custom index on corpus
 \item Vector DB: Pinecone or Weaviate collection with 100k--1M embeddings
