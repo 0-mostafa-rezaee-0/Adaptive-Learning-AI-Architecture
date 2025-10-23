@@ -48,7 +48,7 @@ This document presents a comprehensive, incremental architecture for an adaptive
 
 \section{Executive Summary}\label{sec:executive-summary}
 
-\subsection{Chosen Approach and Rationale}
+\subsection{Chosen Approach and Rationale}\label{subsec:chosen-approach}
 
 \begin{itemize}[leftmargin=*]
 \item \textbf{Recommended Architecture:} RAG-first with cross-encoder reranking, agentic orchestration, and contextual bandits for content selection, augmented with task-specific LoRA fine-tuning for pedagogical components.
@@ -74,11 +74,11 @@ This document presents a comprehensive, incremental architecture for an adaptive
 
 \newpage
 
-\section{Architecture Options Comparison}
+\section{Architecture Options Comparison}\label{sec:architecture-options}
 
 We evaluate four architectural approaches across key dimensions relevant to our constraints and team capabilities.
 
-\subsection{Option A: RAG-First + Reranking + Agentic Orchestration}
+\subsection{Option A: RAG-First + Reranking + Agentic Orchestration}\label{subsec:option-a}
 
 \textbf{Components:}
 \begin{itemize}
@@ -141,7 +141,7 @@ We evaluate four architectural approaches across key dimensions relevant to our 
 \item Cost scales linearly with usage
 \end{itemize}
 
-\subsection{Option B: Lightweight Fine-Tuning (LoRA/PEFT) + RAG}
+\subsection{Option B: Lightweight Fine-Tuning (LoRA/PEFT) + RAG}\label{subsec:option-b}
 
 \textbf{Components:}
 \begin{itemize}
@@ -202,7 +202,7 @@ We evaluate four architectural approaches across key dimensions relevant to our 
 \item Inference complexity (managing multiple adapters)
 \end{itemize}
 
-\subsection{Option C: RL/Bandits for Content Selection + RAG Baseline}
+\subsection{Option C: RL/Bandits for Content Selection + RAG Baseline}\label{subsec:option-c}
 
 \textbf{Components:}
 \begin{itemize}
@@ -263,7 +263,7 @@ We evaluate four architectural approaches across key dimensions relevant to our 
 \item Safety constraints (prevent over-exploration of bad content)
 \end{itemize}
 
-\subsection{Option D: Fully Fine-Tuned Task-Specific Models}
+\subsection{Option D: Fully Fine-Tuned Task-Specific Models}\label{subsec:option-d}
 
 \textbf{Components:}
 \begin{itemize}
@@ -325,7 +325,7 @@ We evaluate four architectural approaches across key dimensions relevant to our 
 \item Loss of flexibility as foundation models improve
 \end{itemize}
 
-\subsection{Comparison Table}
+\subsection{Comparison Table}\label{subsec:comparison-table}
 
 \begin{table}[H]
 \centering
@@ -350,7 +350,7 @@ We evaluate four architectural approaches across key dimensions relevant to our 
 \label{tab:arch-compare}
 \end{table}
 
-\subsection{Recommendation}
+\subsection{Recommendation}\label{subsec:recommendation}
 
 \textbf{Start with Option A (RAG-First), evolve to hybrid A+C (Bandits), selectively add B (LoRA) for pedagogy.}
 
@@ -365,9 +365,9 @@ We evaluate four architectural approaches across key dimensions relevant to our 
 
 \newpage
 
-\section{Final Recommended Architecture}
+\section{Final Recommended Architecture}\label{sec:final-architecture}
 
-\subsection{System Overview}
+\subsection{System Overview}\label{subsec:system-overview}
 
 The recommended architecture is a modular, layered system that combines:
 \begin{enumerate}
@@ -379,7 +379,7 @@ The recommended architecture is a modular, layered system that combines:
 \item \textbf{Bandit Optimization:} Contextual bandits for content selection under multi-objective reward
 \end{enumerate}
 
-\subsection{Architecture Diagram}
+\subsection{Architecture Diagram}\label{subsec:architecture-diagram}
 
 \begin{figure}[H]
 \centering
@@ -456,9 +456,9 @@ The recommended architecture is a modular, layered system that combines:
 \label{fig:architecture}
 \end{figure}
 
-\subsection{Component Specifications}
+\subsection{Component Specifications}\label{subsec:component-specs}
 
-\subsubsection{Retrieval Layer}
+\subsubsection{Retrieval Layer}\label{subsubsec:retrieval-layer}
 
 \textbf{Embedding Model:}
 \begin{itemize}
@@ -499,7 +499,7 @@ The recommended architecture is a modular, layered system that combines:
 \item Select top-3 diverse candidates for presentation
 \end{itemize}
 
-\subsubsection{Content Minimization Layer}
+\subsubsection{Content Minimization Layer}\label{subsubsec:content-minimization}
 
 \textbf{Video Segmentation:}
 \begin{itemize}
@@ -535,7 +535,7 @@ The recommended architecture is a modular, layered system that combines:
 \item Learner can choose: (1) summary + link to full segment, or (2) full segment directly
 \end{itemize}
 
-\subsubsection{Pedagogical Layer}
+\subsubsection{Pedagogical Layer}\label{subsubsec:pedagogical-layer}
 
 \textbf{Question Generation:}
 \begin{itemize}
@@ -568,7 +568,7 @@ The recommended architecture is a modular, layered system that combines:
 \item \textbf{Validation:} Expert review (10\% sample), pilot testing with learners
 \end{itemize}
 
-\subsubsection{Assessment \& Analytics Layer}
+\subsubsection{Assessment \& Analytics Layer}\label{subsubsec:assessment-analytics}
 
 \textbf{IRT (Item Response Theory) Ability Estimation:}
 \begin{itemize}
@@ -601,7 +601,7 @@ The recommended architecture is a modular, layered system that combines:
 \item \textbf{Correlation analysis:} Monitor correlation; high engagement + low $\Delta\theta$ signals ineffective content
 \end{itemize}
 
-\subsubsection{Agentic Orchestration}
+\subsubsection{Agentic Orchestration}\label{subsubsec:agentic-orchestration}
 
 \textbf{Planner:}
 \begin{itemize}
@@ -637,7 +637,7 @@ The recommended architecture is a modular, layered system that combines:
 \item Calls \texttt{plan\_next\_resource} based on $\Delta\theta$ and mastery gaps
 \end{enumerate}
 
-\subsubsection{Bandit Optimization Layer}
+\subsubsection{Bandit Optimization Layer}\label{subsubsec:bandit-optimization}
 
 \textbf{Contextual Bandit Setup:}
 \begin{itemize}
@@ -678,7 +678,7 @@ The recommended architecture is a modular, layered system that combines:
 \item Teacher override: Human-in-the-loop to veto policy decisions during pilot
 \end{itemize}
 
-\subsection{Guardrails \& Safety}
+\subsection{Guardrails \& Safety}\label{subsec:guardrails-safety}
 
 \textbf{Retrieval-Grounded Generation:}
 \begin{itemize}
@@ -715,7 +715,7 @@ The recommended architecture is a modular, layered system that combines:
 \item On-prem deployment option for institutions with strict privacy requirements
 \end{itemize}
 
-\subsection{Telemetry \& Monitoring}
+\subsection{Telemetry \& Monitoring}\label{subsec:telemetry-monitoring}
 
 \textbf{Per-User Dashboards:}
 \begin{itemize}
@@ -764,9 +764,9 @@ The recommended architecture is a modular, layered system that combines:
 
 \newpage
 
-\section{Data Plan: Cold-Start to Flywheel}
+\section{Data Plan: Cold-Start to Flywheel}\label{sec:data-plan}
 
-\subsection{Challenge: No Historical Content Recommendation Labels}
+\subsection{Challenge: No Historical Content Recommendation Labels}\label{subsec:challenge-no-labels}
 
 We have:
 \begin{itemize}
@@ -781,9 +781,9 @@ We lack:
 \item $\times$ Implicit feedback: clicks, dwell time, learner ratings on recommended content
 \end{itemize}
 
-\subsection{Cold-Start Strategy (Weeks 1--4)}
+\subsection{Cold-Start Strategy (Weeks 1--4)}\label{subsec:cold-start-strategy}
 
-\subsubsection{Heuristic Baseline}
+\subsubsection{Heuristic Baseline}\label{subsubsec:heuristic-baseline}
 
 \textbf{Step 1: Metadata Filters}
 \begin{itemize}
@@ -816,7 +816,7 @@ We lack:
 \item User satisfaction: Baseline to improve upon
 \end{itemize}
 
-\subsubsection{Weak Labels from Existing Data}
+\subsubsection{Weak Labels from Existing Data}\label{subsubsec:weak-labels}
 
 \textbf{Source 1: Q\&A Logs}
 \begin{itemize}
@@ -842,7 +842,7 @@ We lack:
 
 \textbf{Dataset Size:} 5k--20k weakly labeled (query, relevant\_chunk) pairs
 
-\subsubsection{Teacher-in-the-Loop Labeling}
+\subsubsection{Teacher-in-the-Loop Labeling}\label{subsubsec:teacher-in-loop}
 
 \textbf{Active Learning Protocol:}
 \begin{enumerate}
@@ -875,9 +875,9 @@ We lack:
 \item If $\alpha < 0.7$: Refine rubric, provide calibration examples, re-train raters
 \end{itemize}
 
-\subsection{Rapid Dataset Creation (Weeks 3--6)}
+\subsection{Rapid Dataset Creation (Weeks 3--6)}\label{subsec:rapid-dataset-creation}
 
-\subsubsection{Offline Labeling Campaign}
+\subsubsection{Offline Labeling Campaign}\label{subsubsec:offline-labeling}
 
 \textbf{Scale Up:}
 \begin{itemize}
@@ -901,7 +901,7 @@ We lack:
 \item Automatic checks: Flag outliers (e.g., label contradicts semantic similarity)
 \end{itemize}
 
-\subsubsection{Synthetic Data Augmentation}
+\subsubsection{Synthetic Data Augmentation}\label{subsubsec:synthetic-data}
 
 \textbf{LLM-Generated Queries:}
 \begin{itemize}
@@ -920,9 +920,9 @@ We lack:
 
 \textbf{Caveat:} Synthetic data has distribution shift risk. Use for augmentation, not replacement.
 
-\subsection{Using Existing Q\&A/Assessment Logs}
+\subsection{Using Existing Q\&A/Assessment Logs}\label{subsec:using-existing-logs}
 
-\subsubsection{Question Generation Training Data}
+\subsubsection{Question Generation Training Data}\label{subsubsec:question-gen-training}
 
 \textbf{Source:} Historical assessment database (10k--100k questions)
 
@@ -940,7 +940,7 @@ We lack:
 \item Use for: Few-shot prompting (Milestone 3), LoRA fine-tuning (Milestone 5)
 \end{itemize}
 
-\subsubsection{Grading Rubric Training Data}
+\subsubsection{Grading Rubric Training Data}\label{subsubsec:grading-rubric-training}
 
 \textbf{Source:} Historical student responses + instructor grades/feedback
 
@@ -958,7 +958,7 @@ We lack:
 \item Use for: Prompt engineering with exemplars, LoRA fine-tuning
 \end{itemize}
 
-\subsubsection{Difficulty Estimation Calibration}
+\subsubsection{Difficulty Estimation Calibration}\label{subsubsec:difficulty-calibration}
 
 \textbf{Source:} Historical response data (learner\_id, question\_id, correct/incorrect, response\_time)
 
@@ -976,9 +976,9 @@ We lack:
 \item Anchor items: Include calibrated items in each test to link scales
 \end{itemize}
 
-\subsection{Data Flywheel (Weeks 7+)}
+\subsection{Data Flywheel (Weeks 7+)}\label{subsec:data-flywheel}
 
-\subsubsection{Implicit Feedback Collection}
+\subsubsection{Implicit Feedback Collection}\label{subsubsec:implicit-feedback}
 
 \textbf{User Actions:}
 \begin{itemize}
@@ -996,7 +996,7 @@ We lack:
 \item Retention: 1 year minimum for analysis
 \end{itemize}
 
-\subsubsection{Bandit Policy Training}
+\subsubsection{Bandit Policy Training}\label{subsubsec:bandit-policy-training}
 
 \textbf{Data Preparation:}
 \begin{itemize}
@@ -1014,7 +1014,7 @@ We lack:
 \item Week 9+: Retrain weekly with cumulative data, reduce exploration to 10\%
 \end{itemize}
 
-\subsubsection{Retrieval Quality Improvement}
+\subsubsection{Retrieval Quality Improvement}\label{subsubsec:retrieval-quality-improvement}
 
 \textbf{Relevance Feedback:}
 \begin{itemize}
@@ -1030,7 +1030,7 @@ We lack:
 \item Retrain with new labels $\rightarrow$ improved reranker
 \end{itemize}
 
-\subsubsection{Question Quality Refinement}
+\subsubsection{Question Quality Refinement}\label{subsubsec:question-quality-refinement}
 
 \textbf{Expert Review Loop:}
 \begin{itemize}
@@ -1047,7 +1047,7 @@ We lack:
 \item Retire low-quality questions, replace with improved versions
 \end{itemize}
 
-\subsection{Data Plan Summary}
+\subsection{Data Plan Summary}\label{subsec:data-plan-summary}
 
 \begin{table}[H]
 \centering
@@ -1067,13 +1067,13 @@ Flywheel (W7+) & Implicit feedback (clicks, dwell, quiz scores), explicit feedba
 
 \newpage
 
-\section{Metrics \& Evaluation}
+\section{Metrics \& Evaluation}\label{sec:metrics-evaluation}
 
 All metrics must be \textbf{executable per milestone} with concrete measurement protocols.
 
-\subsection{Retrieval \& Selection Quality}
+\subsection{Retrieval \& Selection Quality}\label{subsec:retrieval-selection-quality}
 
-\subsubsection{nDCG@k (Normalized Discounted Cumulative Gain)}
+\subsubsection{nDCG@k (Normalized Discounted Cumulative Gain)}\label{subsubsec:ndcg-metric}
 
 \textbf{Definition:}
 \[
@@ -1088,7 +1088,7 @@ All metrics must be \textbf{executable per milestone} with concrete measurement 
 \item \textbf{Optimized target:} nDCG@5 $> 0.75$, nDCG@10 $> 0.80$
 \end{itemize}
 
-\subsubsection{Recall@k}
+\subsubsection{Recall@k}\label{subsubsec:recall-metric}
 
 \textbf{Definition:} Fraction of relevant resources retrieved in top-k results.
 
@@ -1100,7 +1100,7 @@ All metrics must be \textbf{executable per milestone} with concrete measurement 
 \item \textbf{Optimized target:} Recall@10 $> 0.85$
 \end{itemize}
 
-\subsubsection{Coverage}
+\subsubsection{Coverage}\label{subsubsec:coverage-metric}
 
 \textbf{Definition:} Percentage of unique content chunks recommended across all queries.
 
@@ -1111,7 +1111,7 @@ All metrics must be \textbf{executable per milestone} with concrete measurement 
 \item \textbf{Target:} Coverage $> 50\%$ (avoid over-recommending popular content)
 \end{itemize}
 
-\subsubsection{Time-to-First-Useful-Resource}
+\subsubsection{Time-to-First-Useful-Resource}\label{subsubsec:time-to-first-useful}
 
 \textbf{Definition:} Latency from query submission to first resource deemed useful by learner.
 
@@ -1122,9 +1122,9 @@ All metrics must be \textbf{executable per milestone} with concrete measurement 
 \item \textbf{Target:} P50 $<$ 5 seconds, P95 $<$ 10 seconds
 \end{itemize}
 
-\subsection{Minimality Metrics}
+\subsection{Minimality Metrics}\label{subsec:minimality-metrics}
 
-\subsubsection{Median Resource Length}
+\subsubsection{Median Resource Length}\label{subsubsec:median-resource-length}
 
 \textbf{Measurement:}
 \begin{itemize}
@@ -1133,7 +1133,7 @@ All metrics must be \textbf{executable per milestone} with concrete measurement 
 \item \textbf{Target:} Videos $<$ 90 seconds, PDFs $<$ 1.5 pages
 \end{itemize}
 
-\subsubsection{Overkill Rate}
+\subsubsection{Overkill Rate}\label{subsubsec:overkill-rate}
 
 \textbf{Definition:} Percentage of recommendations exceeding target length thresholds.
 
@@ -1144,7 +1144,7 @@ All metrics must be \textbf{executable per milestone} with concrete measurement 
 \item \textbf{Target:} Overkill Rate $<$ 15\%
 \end{itemize}
 
-\subsubsection{Compression Ratio}
+\subsubsection{Compression Ratio}\label{subsubsec:compression-ratio}
 
 \textbf{Definition:} Ratio of recommended segment length to full resource length.
 
@@ -1155,9 +1155,9 @@ All metrics must be \textbf{executable per milestone} with concrete measurement 
 \item \textbf{Target:} Compression ratio $<$ 0.3 (segments are $<$ 30\% of full resource)
 \end{itemize}
 
-\subsection{Question Quality Metrics}
+\subsection{Question Quality Metrics}\label{subsec:question-quality-metrics}
 
-\subsubsection{Expert Rubric Scores}
+\subsubsection{Expert Rubric Scores}\label{subsubsec:expert-rubric-scores}
 
 \textbf{Rubric Dimensions:}
 \begin{enumerate}
@@ -1175,7 +1175,7 @@ All metrics must be \textbf{executable per milestone} with concrete measurement 
 \item \textbf{Target:} Overall score $> 4.0$ (good), $> 4.5$ (excellent)
 \end{itemize}
 
-\subsubsection{Pass@k on Canonical Answers}
+\subsubsection{Pass@k on Canonical Answers}\label{subsubsec:pass-at-k}
 
 \textbf{Definition:} Percentage of generated questions for which the canonical answer (from reference material) receives a passing grade.
 
@@ -1187,7 +1187,7 @@ All metrics must be \textbf{executable per milestone} with concrete measurement 
 \item \textbf{Target:} Pass@1 $> 90\%$
 \end{itemize}
 
-\subsubsection{Factuality via Reference-Grounded Checks}
+\subsubsection{Factuality via Reference-Grounded Checks}\label{subsubsec:factuality-checks}
 
 \textbf{Method:}
 \begin{itemize}
@@ -1202,9 +1202,9 @@ All metrics must be \textbf{executable per milestone} with concrete measurement 
 \item Thresholds: Entailment probability $> 0.8$ (confident), $< 0.5$ (reject question)
 \end{itemize}
 
-\subsection{Assessment Quality Metrics}
+\subsection{Assessment Quality Metrics}\label{subsec:assessment-quality-metrics}
 
-\subsubsection{Item Discrimination ($a$)}
+\subsubsection{Item Discrimination ($a$)}\label{subsubsec:item-discrimination}
 
 \textbf{Definition:} Slope of the item characteristic curve; higher $a$ means item better distinguishes high- from low-ability learners.
 
@@ -1215,7 +1215,7 @@ All metrics must be \textbf{executable per milestone} with concrete measurement 
 \item \textbf{Flag:} Items with $a < 0.5$ (low discrimination) for review/retirement
 \end{itemize}
 
-\subsubsection{Item Difficulty ($b$)}
+\subsubsection{Item Difficulty ($b$)}\label{subsubsec:item-difficulty}
 
 \textbf{Definition:} Ability level at which 50\% probability of correct response.
 
@@ -1226,7 +1226,7 @@ All metrics must be \textbf{executable per milestone} with concrete measurement 
 \item \textbf{Flag:} Items with $|b| > 3$ (extreme difficulty) for review
 \end{itemize}
 
-\subsubsection{Guessing Parameter ($c$)}
+\subsubsection{Guessing Parameter ($c$)}\label{subsubsec:guessing-parameter}
 
 \textbf{Definition:} Lower asymptote of item characteristic curve; probability of correct response by random guessing.
 
@@ -1237,7 +1237,7 @@ All metrics must be \textbf{executable per milestone} with concrete measurement 
 \item \textbf{Flag:} $c > 0.4$ (too easy to guess) or $c < 0.1$ (implausible)
 \end{itemize}
 
-\subsubsection{Test Information and Ability Standard Error}
+\subsubsection{Test Information and Ability Standard Error}\label{subsubsec:test-information}
 
 \textbf{Test Information:} $I(\theta) = \sum_{i=1}^{n} I_i(\theta)$ where $I_i(\theta) = a_i^2 \cdot P_i(\theta) \cdot Q_i(\theta) / P_i'(\theta)^2$
 
@@ -1250,7 +1250,7 @@ All metrics must be \textbf{executable per milestone} with concrete measurement 
 \item Adaptive testing: Administer items near learner's $\theta$ to maximize information
 \end{itemize}
 
-\subsubsection{Test-Retest Reliability}
+\subsubsection{Test-Retest Reliability}\label{subsubsec:test-retest-reliability}
 
 \textbf{Definition:} Correlation of $\theta$ estimates across two independent test administrations.
 
@@ -1261,9 +1261,9 @@ All metrics must be \textbf{executable per milestone} with concrete measurement 
 \item \textbf{Target:} $\rho > 0.80$ (acceptable), $> 0.85$ (good), $> 0.90$ (excellent)
 \end{itemize}
 
-\subsection{Learning Outcome Metrics}
+\subsection{Learning Outcome Metrics}\label{subsec:learning-outcome-metrics}
 
-\subsubsection{$\Delta\theta$ Over Time}
+\subsubsection{$\Delta\theta$ Over Time}\label{subsubsec:delta-theta-over-time}
 
 \textbf{Definition:} Change in ability estimate from session $t$ to session $t+1$.
 
@@ -1275,7 +1275,7 @@ All metrics must be \textbf{executable per milestone} with concrete measurement 
 \item \textbf{Benchmark:} Compare to control group or historical baseline (if available)
 \end{itemize}
 
-\subsubsection{Normalized Gain (Hake Gain)}
+\subsubsection{Normalized Gain (Hake Gain)}\label{subsubsec:normalized-gain}
 
 \textbf{Definition:} $g = \frac{\theta_{\text{post}} - \theta_{\text{pre}}}{\theta_{\text{max}} - \theta_{\text{pre}}}$
 
@@ -1288,7 +1288,7 @@ All metrics must be \textbf{executable per milestone} with concrete measurement 
 \item \textbf{Target:} Mean $g > 0.4$ (medium gain)
 \end{itemize}
 
-\subsubsection{Mastery Progression}
+\subsubsection{Mastery Progression}\label{subsubsec:mastery-progression}
 
 \textbf{Definition:} Percentage of learners achieving target proficiency on each topic/skill.
 
@@ -1300,7 +1300,7 @@ All metrics must be \textbf{executable per milestone} with concrete measurement 
 \item \textbf{Target:} 70\% mastery rate by end of unit
 \end{itemize}
 
-\subsubsection{Downstream Task Performance}
+\subsubsection{Downstream Task Performance}\label{subsubsec:downstream-performance}
 
 \textbf{Definition:} Performance on external assessments (e.g., final exams, standardized tests) after using the system.
 
@@ -1311,9 +1311,9 @@ All metrics must be \textbf{executable per milestone} with concrete measurement 
 \item \textbf{Target:} Effect size $d > 0.3$ (medium effect), ideally $d > 0.5$ (large effect)
 \end{itemize}
 
-\subsection{Distinguishing Engagement from Learning}
+\subsection{Distinguishing Engagement from Learning}\label{subsec:engagement-vs-learning}
 
-\subsubsection{Engagement Metrics (Track but Do Not Optimize For)}
+\subsubsection{Engagement Metrics (Track but Do Not Optimize For)}\label{subsubsec:engagement-metrics}
 
 \begin{itemize}
 \item \textbf{Click-Through Rate (CTR):} \% of recommended resources clicked
@@ -1322,7 +1322,7 @@ All metrics must be \textbf{executable per milestone} with concrete measurement 
 \item \textbf{Completion Rate:} \% of suggested activities completed
 \end{itemize}
 
-\subsubsection{Learning Metrics (Primary Optimization Target)}
+\subsubsection{Learning Metrics (Primary Optimization Target)}\label{subsubsec:learning-metrics}
 
 \begin{itemize}
 \item \textbf{$\Delta\theta$:} Ability growth per session/week
@@ -1331,7 +1331,7 @@ All metrics must be \textbf{executable per milestone} with concrete measurement 
 \item \textbf{Downstream Performance:} External exam scores
 \end{itemize}
 
-\subsubsection{Correlation Analysis}
+\subsubsection{Correlation Analysis}\label{subsubsec:correlation-analysis}
 
 \textbf{Method:}
 \begin{itemize}
@@ -1347,9 +1347,9 @@ All metrics must be \textbf{executable per milestone} with concrete measurement 
 \item If negative correlation: Engaging content may be distracting $\rightarrow$ investigate
 \end{itemize}
 
-\subsection{Safety \& Accuracy Metrics}
+\subsection{Safety \& Accuracy Metrics}\label{subsec:safety-accuracy-metrics}
 
-\subsubsection{Hallucination Rate}
+\subsubsection{Hallucination Rate}\label{subsubsec:hallucination-rate}
 
 \textbf{Definition:} Percentage of LLM outputs that contradict or are unsupported by retrieved content.
 
@@ -1362,7 +1362,7 @@ All metrics must be \textbf{executable per milestone} with concrete measurement 
 \item \textbf{Target:} Hallucination rate $< 3\%$
 \end{itemize}
 
-\subsubsection{Refusal/Deferral Accuracy}
+\subsubsection{Refusal/Deferral Accuracy}\label{subsubsec:refusal-accuracy}
 
 \textbf{Definition:} Correctness of system's decision to refuse or defer to human when uncertain.
 
@@ -1373,7 +1373,7 @@ All metrics must be \textbf{executable per milestone} with concrete measurement 
 \item \textbf{Target:} Precision $> 0.90$, Recall $> 0.85$
 \end{itemize}
 
-\subsection{Evaluation Protocol per Milestone}
+\subsection{Evaluation Protocol per Milestone}\label{subsec:evaluation-protocol}
 
 \begin{table}[H]
 \centering
@@ -1395,11 +1395,11 @@ M6 (Production) & All above + Safety metrics, P95 latency, Cost/learner & Halluc
 
 \newpage
 
-\section{Stepwise Roadmap (12 Weeks)}
+\section{Stepwise Roadmap (12 Weeks)}\label{sec:roadmap}
 
-\subsection{Milestone 1 (Weeks 1--2): RAG Baseline with Minimality Constraints}
+\subsection{Milestone 1 (Weeks 1--2): RAG Baseline with Minimality Constraints}\label{subsec:milestone-1}
 
-\subsubsection{Objectives}
+\subsubsection{Objectives}\label{subsubsec:m1-objectives}
 \begin{itemize}
 \item Deploy functional RAG system with hybrid retrieval (BM25 + dense embeddings)
 \item Enforce hard caps on resource length (videos $\leq$ 3 min, PDFs $\leq$ 2 pages)
@@ -1407,7 +1407,7 @@ M6 (Production) & All above + Safety metrics, P95 latency, Cost/learner & Halluc
 \item Establish evaluation harness and red-team test cases
 \end{itemize}
 
-\subsubsection{Tasks}
+\subsubsection{Tasks}\label{subsubsec:m1-tasks}
 \begin{enumerate}
 \item \textbf{Content Ingestion:}
 \begin{itemize}
@@ -1451,7 +1451,7 @@ M6 (Production) & All above + Safety metrics, P95 latency, Cost/learner & Halluc
 \end{itemize}
 \end{enumerate}
 
-\subsubsection{Deliverables}
+\subsubsection{Deliverables}\label{subsubsec:m1-deliverables}
 \begin{itemize}
 \item Functional RAG API: \texttt{POST /retrieve} (query $\rightarrow$ top-3 resources)
 \item Evaluation report: Metrics table, example retrievals, failure analysis
@@ -1459,7 +1459,7 @@ M6 (Production) & All above + Safety metrics, P95 latency, Cost/learner & Halluc
 \item Data card: Content corpus stats (\# videos, PDFs, total duration/pages)
 \end{itemize}
 
-\subsubsection{Acceptance Criteria}
+\subsubsection{Acceptance Criteria}\label{subsubsec:m1-acceptance}
 \begin{itemize}
 \item nDCG@5 $> 0.6$, Recall@10 $> 0.70$
 \item Median resource length $<$ 90 seconds (videos), $<$ 1.5 pages (PDFs)
@@ -1467,7 +1467,7 @@ M6 (Production) & All above + Safety metrics, P95 latency, Cost/learner & Halluc
 \item P95 latency $<$ 8 seconds
 \end{itemize}
 
-\subsection{Milestone 2 (Weeks 3--4): Cross-Encoder Reranking \& Video/PDF Segmentation}
+\subsection{Milestone 2 (Weeks 3--4): Cross-Encoder Reranking \& Video/PDF Segmentation}\label{subsec:milestone-2}
 
 \subsubsection{Objectives}
 \begin{itemize}
@@ -1538,7 +1538,7 @@ M6 (Production) & All above + Safety metrics, P95 latency, Cost/learner & Halluc
 \item No malformed JSON outputs (100\% schema compliance)
 \end{itemize}
 
-\subsection{Milestone 3 (Weeks 5--6): Pedagogy Tools v1}
+\subsection{Milestone 3 (Weeks 5--6): Pedagogy Tools v1}\label{subsec:milestone-3}
 
 \subsubsection{Objectives}
 \begin{itemize}
@@ -1604,7 +1604,7 @@ M6 (Production) & All above + Safety metrics, P95 latency, Cost/learner & Halluc
 \item Grading consistency: $\kappa > 0.75$ (agreement with human raters on 100 test cases)
 \end{itemize}
 
-\subsection{Milestone 4 (Weeks 7--8): Bandit/RLHF for Content Selection}
+\subsection{Milestone 4 (Weeks 7--8): Bandit/RLHF for Content Selection}\label{subsec:milestone-4}
 
 \subsubsection{Objectives}
 \begin{itemize}
@@ -1681,7 +1681,7 @@ M6 (Production) & All above + Safety metrics, P95 latency, Cost/learner & Halluc
 \item Off-policy evaluation: Predicted reward matches actual reward within 10\% (model calibration check)
 \end{itemize}
 
-\subsection{Milestone 5 (Weeks 9--10): Optional LoRA Fine-Tuning \& A/B Test}
+\subsection{Milestone 5 (Weeks 9--10): Optional LoRA Fine-Tuning \& A/B Test}\label{subsec:milestone-5}
 
 \subsubsection{Objectives}
 \begin{itemize}
@@ -1751,7 +1751,7 @@ M6 (Production) & All above + Safety metrics, P95 latency, Cost/learner & Halluc
 \item Decision: If criteria met, proceed to production with LoRA; if not, revert to prompt-only
 \end{itemize}
 
-\subsection{Milestone 6 (Weeks 11--12): Production Hardening}
+\subsection{Milestone 6 (Weeks 11--12): Production Hardening}\label{subsec:milestone-6}
 
 \subsubsection{Objectives}
 \begin{itemize}
@@ -1850,7 +1850,7 @@ M6 (Production) & All above + Safety metrics, P95 latency, Cost/learner & Halluc
 \item Uptime: 99.5\% availability (4 hours downtime/month acceptable for pilot)
 \end{itemize}
 
-\subsection{Roadmap Summary Table}
+\subsection{Roadmap Summary Table}\label{subsec:roadmap-summary}
 
 \begin{table}[H]
 \centering
@@ -1872,9 +1872,9 @@ M6 & Weeks 11--12 & Guardrails, safety, compliance, telemetry, educator/learner 
 
 \newpage
 
-\section{Reinforcement Learning Design}
+\section{Reinforcement Learning Design}\label{sec:rl-design}
 
-\subsection{Problem Formulation}
+\subsection{Problem Formulation}\label{subsec:problem-formulation}
 
 \textbf{Objective:} Learn a policy $\pi(a|x)$ that selects content (action $a$) given context ($x$) to maximize long-term learning outcomes (reward $R$) under minimality and accuracy constraints.
 
@@ -1886,7 +1886,7 @@ M6 & Weeks 11--12 & Guardrails, safety, compliance, telemetry, educator/learner 
 \item \textbf{Distribution shift:} Content corpus evolves, learner population changes over time.
 \end{itemize}
 
-\subsection{Multi-Objective Reward Function}
+\subsection{Multi-Objective Reward Function}\label{subsec:multi-objective-reward}
 
 \textbf{Reward Definition:}
 \[
@@ -1936,7 +1936,7 @@ R = w_1 \cdot \Delta\theta + w_2 \cdot B(d) - w_3 \cdot I(q, r) - w_4 \cdot L(t)
 \item \textbf{Stakeholder input:} Educators prioritize learning ($w_1$ high), product team balances UX ($w_2, w_4$)
 \end{itemize}
 
-\subsection{Contextual Bandit Approach}
+\subsection{Contextual Bandit Approach}\label{subsec:contextual-bandit}
 
 \subsubsection{Algorithm Choice}
 
@@ -2024,7 +2024,7 @@ R = w_1 \cdot \Delta\theta + w_2 \cdot B(d) - w_3 \cdot I(q, r) - w_4 \cdot L(t)
 \item \textbf{Process:} Flagged cases go to weekly review meeting, update blacklist or adjust reward weights if needed.
 \end{itemize}
 
-\subsection{Escalation to Full RL}
+\subsection{Escalation to Full RL}\label{subsec:escalation-full-rl}
 
 \textbf{When to Escalate:}
 \begin{itemize}
@@ -2053,7 +2053,7 @@ R = w_1 \cdot \Delta\theta + w_2 \cdot B(d) - w_3 \cdot I(q, r) - w_4 \cdot L(t)
 \item \textbf{Stay with bandits if:} Bandit continues improving OR data volume insufficient ($<$ 50k interactions).
 \end{itemize}
 
-\subsection{Practical Implementation Checklist}
+\subsection{Practical Implementation Checklist}\label{subsec:implementation-checklist}
 
 \begin{enumerate}
 \item \textbf{Data collection:} Log (timestamp, learner\_id, context, action, reward, propensity) for every interaction.
@@ -2070,9 +2070,9 @@ R = w_1 \cdot \Delta\theta + w_2 \cdot B(d) - w_3 \cdot I(q, r) - w_4 \cdot L(t)
 
 \newpage
 
-\section{Fine-Tuning Policy}
+\section{Fine-Tuning Policy}\label{sec:fine-tuning-policy}
 
-\subsection{General Principle: Avoid Premature Fine-Tuning}
+\subsection{General Principle: Avoid Premature Fine-Tuning}\label{subsec:avoid-premature-finetuning}
 
 \textbf{Rationale:}
 \begin{itemize}
@@ -2090,7 +2090,7 @@ R = w_1 \cdot \Delta\theta + w_2 \cdot B(d) - w_3 \cdot I(q, r) - w_4 \cdot L(t)
 \item Inference cost/latency is acceptable (fine-tuned models can be faster/cheaper if self-hosted).
 \end{enumerate}
 
-\subsection{When to Fine-Tune}
+\subsection{When to Fine-Tune}\label{subsec:when-to-finetune}
 
 \subsubsection{Task 1: Question Generation}
 
@@ -2186,7 +2186,7 @@ R = w_1 \cdot \Delta\theta + w_2 \cdot B(d) - w_3 \cdot I(q, r) - w_4 \cdot L(t)
 \item Scaffolding quality: More tailored to learner's specific error pattern.
 \end{itemize}
 
-\subsection{LoRA/PEFT Configuration}
+\subsection{LoRA/PEFT Configuration}\label{subsec:lora-peft-config}
 
 \textbf{Advantages of LoRA:}
 \begin{itemize}
@@ -2219,7 +2219,7 @@ R = w_1 \cdot \Delta\theta + w_2 \cdot B(d) - w_3 \cdot I(q, r) - w_4 \cdot L(t)
 \item \textbf{Latency:} Adapter adds $<$ 50ms vs. base model inference.
 \end{itemize}
 
-\subsection{Migration Plan for Model Upgrades}
+\subsection{Migration Plan for Model Upgrades}\label{subsec:migration-plan}
 
 \textbf{Challenge:} Base models upgrade frequently (e.g., GPT-4o $\rightarrow$ GPT-4.5, Llama 3.1 $\rightarrow$ Llama 4). How to preserve adapter investment?
 
@@ -2254,7 +2254,7 @@ R = w_1 \cdot \Delta\theta + w_2 \cdot B(d) - w_3 \cdot I(q, r) - w_4 \cdot L(t)
 \item Rollback plan: If new model underperforms, revert to previous version within 1 hour.
 \end{itemize}
 
-\subsection{Decision Checklist for Fine-Tuning}
+\subsection{Decision Checklist for Fine-Tuning}\label{subsec:decision-checklist}
 
 \begin{table}[H]
 \centering
@@ -2282,9 +2282,9 @@ Team capacity & Can manage training pipeline & ML engineering availability \\
 
 \newpage
 
-\section{Risks \& Mitigations}
+\section{Risks \& Mitigations}\label{sec:risks-mitigations}
 
-\subsection{Risk 1: Cold-Start for Content Recommendations}
+\subsection{Risk 1: Cold-Start for Content Recommendations}\label{subsec:risk-1-cold-start}
 
 \textbf{Description:} No historical labels for "best resource" for each query. Initial recommendations may be poor quality.
 
@@ -2311,7 +2311,7 @@ Team capacity & Can manage training pipeline & ML engineering availability \\
 \item Alert: If nDCG $<$ 0.5 or satisfaction $<$ 60\% after Week 2, escalate to manual review.
 \end{itemize}
 
-\subsection{Risk 2: Over-Long Resources (Minimality Failure)}
+\subsection{Risk 2: Over-Long Resources (Minimality Failure)}\label{subsec:risk-2-over-long}
 
 \textbf{Description:} Retrieval returns hour-long videos or 50-page PDFs instead of short segments.
 
@@ -2337,7 +2337,7 @@ Team capacity & Can manage training pipeline & ML engineering availability \\
 \item Alert: If median $>$ 90s or overkill $>$ 15\%, audit retrieval pipeline for failures.
 \end{itemize}
 
-\subsection{Risk 3: Hallucinations (Factual Errors)}
+\subsection{Risk 3: Hallucinations (Factual Errors)}\label{subsec:risk-3-hallucinations}
 
 \textbf{Description:} LLM generates incorrect questions, explanations, or hints not grounded in content.
 
@@ -2364,7 +2364,7 @@ Team capacity & Can manage training pipeline & ML engineering availability \\
 \item Alert: If hallucination $>$ 5\%, pause deployment and investigate root cause.
 \end{itemize}
 
-\subsection{Risk 4: Misaligned Difficulty (Questions Too Easy/Hard)}
+\subsection{Risk 4: Misaligned Difficulty (Questions Too Easy/Hard)}\label{subsec:risk-4-difficulty}
 
 \textbf{Description:} Generated questions don't match learner's ability level ($\theta$), leading to frustration or boredom.
 
@@ -2391,7 +2391,7 @@ Team capacity & Can manage training pipeline & ML engineering availability \\
 \item Alert: If SE $>$ 0.5 (low precision) or item $a < 0.5$ (low discrimination), flag for recalibration.
 \end{itemize}
 
-\subsection{Risk 5: Privacy \& PII Leakage}
+\subsection{Risk 5: Privacy \& PII Leakage}\label{subsec:risk-5-privacy}
 
 \textbf{Description:} Learner PII (names, emails, performance data) leaked in logs, prompts, or outputs.
 
@@ -2419,7 +2419,7 @@ Team capacity & Can manage training pipeline & ML engineering availability \\
 \item Alert: If PII detected in logs or unauthorized access, escalate to security team immediately.
 \end{itemize}
 
-\subsection{Risk 6: Model Drift \& Degradation}
+\subsection{Risk 6: Model Drift \& Degradation}\label{subsec:risk-6-model-drift}
 
 \textbf{Description:} Foundation models update (GPT-4o $\rightarrow$ GPT-4.5), prompts break, adapters become misaligned.
 
@@ -2446,7 +2446,7 @@ Team capacity & Can manage training pipeline & ML engineering availability \\
 \item Alert: If metrics drop $>$ 5\% after model upgrade, trigger rollback procedure.
 \end{itemize}
 
-\subsection{Risk 7: Bias \& Fairness}
+\subsection{Risk 7: Bias \& Fairness}\label{subsec:risk-7-bias}
 
 \textbf{Description:} System exhibits bias (demographic, topic, language) in recommendations or questions.
 
@@ -2472,7 +2472,7 @@ Team capacity & Can manage training pipeline & ML engineering availability \\
 \item Alert: If bias detected (counterfactual test fails or disparity $>$ 0.1), escalate to ethics review.
 \end{itemize}
 
-\subsection{Risk Summary Table}
+\subsection{Risk Summary Table}\label{subsec:risk-summary}
 
 \begin{table}[H]
 \centering
@@ -2495,9 +2495,9 @@ Bias \& fairness & Medium & Bias audit, diverse data, counterfactual testing, fa
 
 \newpage
 
-\section{Deliverables per Milestone}
+\section{Deliverables per Milestone}\label{sec:deliverables}
 
-\subsection{Milestone 1: RAG Baseline}
+\subsection{Milestone 1: RAG Baseline}\label{subsec:deliverable-milestone-1}
 
 \textbf{Code \& Pipelines:}
 \begin{itemize}
@@ -2523,7 +2523,7 @@ Bias \& fairness & Medium & Bias audit, diverse data, counterfactual testing, fa
 \item Decision memo: Go/no-go for M2 based on acceptance criteria
 \end{itemize}
 
-\subsection{Milestone 2: Reranking \& Segmentation}
+\subsection{Milestone 2: Reranking \& Segmentation}\label{subsec:deliverable-milestone-2}
 
 \textbf{Code \& Pipelines:}
 \begin{itemize}
@@ -2547,7 +2547,7 @@ Bias \& fairness & Medium & Bias audit, diverse data, counterfactual testing, fa
 \item Ablation study: BM25-only vs. Dense-only vs. Hybrid + reranking
 \end{itemize}
 
-\subsection{Milestone 3: Pedagogy Tools v1}
+\subsection{Milestone 3: Pedagogy Tools v1}\label{subsec:deliverable-milestone-3}
 
 \textbf{Code \& Pipelines:}
 \begin{itemize}
@@ -2571,7 +2571,7 @@ Bias \& fairness & Medium & Bias audit, diverse data, counterfactual testing, fa
 \item Failure analysis: Common error modes (ambiguous questions, off-topic, hallucinations)
 \end{itemize}
 
-\subsection{Milestone 4: Bandit Optimization}
+\subsection{Milestone 4: Bandit Optimization}\label{subsec:deliverable-milestone-4}
 
 \textbf{Code \& Pipelines:}
 \begin{itemize}
@@ -2595,7 +2595,7 @@ Bias \& fairness & Medium & Bias audit, diverse data, counterfactual testing, fa
 \item Decision memo: Proceed to LoRA fine-tuning if $\Delta\theta$ improves by $\geq$ 10\%
 \end{itemize}
 
-\subsection{Milestone 5: LoRA Fine-Tuning}
+\subsection{Milestone 5: LoRA Fine-Tuning}\label{subsec:deliverable-milestone-5}
 
 \textbf{Code \& Pipelines:}
 \begin{itemize}
@@ -2619,7 +2619,7 @@ Bias \& fairness & Medium & Bias audit, diverse data, counterfactual testing, fa
 \item Migration plan: Procedure for upgrading base model while preserving adapters
 \end{itemize}
 
-\subsection{Milestone 6: Production Hardening}
+\subsection{Milestone 6: Production Hardening}\label{subsec:deliverable-milestone-6}
 
 \textbf{Code \& Pipelines:}
 \begin{itemize}
@@ -2652,7 +2652,7 @@ Bias \& fairness & Medium & Bias audit, diverse data, counterfactual testing, fa
 \item Technical docs: API reference, architecture diagrams, deployment guide
 \end{itemize}
 
-\subsection{Deliverable Checklist (All Milestones)}
+\subsection{Deliverable Checklist (All Milestones)}\label{subsec:deliverable-checklist}
 
 \begin{table}[H]
 \centering
@@ -2674,12 +2674,12 @@ Bias \& fairness & Medium & Bias audit, diverse data, counterfactual testing, fa
 
 \newpage
 
-\section{First 14 Days: Executable Task List}
+\section{First 14 Days: Executable Task List}\label{sec:first-14-days}
 
-\subsection{Objective}
+\subsection{Objective}\label{subsec:first-14-objective}
 Get from zero to a functional RAG baseline (Milestone 1) in 2 weeks, with concrete metrics and evaluation harness.
 
-\subsection{Team Composition (Small Team)}
+\subsection{Team Composition (Small Team)}\label{subsec:team-composition}
 \begin{itemize}
 \item \textbf{1 ML Engineer:} Responsible for RAG pipeline, embeddings, retrieval.
 \item \textbf{1 Data Scientist:} Responsible for evaluation, metrics, analysis.
@@ -2687,7 +2687,7 @@ Get from zero to a functional RAG baseline (Milestone 1) in 2 weeks, with concre
 \item \textbf{1 Product Manager (part-time):} Coordinate with educators, define test cases.
 \end{itemize}
 
-\subsection{Day-by-Day Task Breakdown}
+\subsection{Day-by-Day Task Breakdown}\label{subsec:day-by-day-tasks}
 
 \subsubsection{Week 1 (Days 1--7): Content Ingestion \& Baseline Retrieval}
 
@@ -2764,7 +2764,7 @@ Get from zero to a functional RAG baseline (Milestone 1) in 2 weeks, with concre
 \item \textbf{Output:} PDF report + slides for review meeting.
 \end{enumerate}
 
-\subsection{Task Assignment Table}
+\subsection{Task Assignment Table}\label{subsec:task-assignment}
 
 \begin{table}[H]
 \centering
@@ -2787,7 +2787,7 @@ Get from zero to a functional RAG baseline (Milestone 1) in 2 weeks, with concre
 \caption{Task Assignment (Days 1--14)}
 \end{table}
 
-\subsection{Daily Standup Agenda}
+\subsection{Daily Standup Agenda}\label{subsec:daily-standup}
 
 \begin{enumerate}
 \item Yesterday: What did I complete?
@@ -2796,7 +2796,7 @@ Get from zero to a functional RAG baseline (Milestone 1) in 2 weeks, with concre
 \item Metrics: Current progress toward Day 14 acceptance criteria.
 \end{enumerate}
 
-\subsection{Success Criteria (End of Day 14)}
+\subsection{Success Criteria (End of Day 14)}\label{subsec:success-criteria}
 
 \begin{itemize}
 \item \textbf{Functional API:} \texttt{POST /retrieve} returns top-3 resources in $<$ 8s (P95).
@@ -2806,7 +2806,7 @@ Get from zero to a functional RAG baseline (Milestone 1) in 2 weeks, with concre
 \item \textbf{Decision:} Go/no-go for M2 based on acceptance criteria.
 \end{itemize}
 
-\subsection{Tools \& Resources (Quick Start)}
+\subsection{Tools \& Resources (Quick Start)}\label{subsec:tools-resources}
 
 \begin{itemize}
 \item \textbf{ASR:} OpenAI Whisper API or \texttt{faster-whisper} (self-hosted)
