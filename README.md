@@ -8,7 +8,7 @@ This will create your own copy of this project, which you can modify freely — 
   <img src="images/banner.png" alt="banner" width="75%">
 </p> -->
 
-<h1 align="center">Adaptive Learning System AI Architecture</h1>
+<h1 align="center">Adaptive Learning AI Architecture</h1>
 
 
 
