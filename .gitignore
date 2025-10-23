@@ -17,6 +17,31 @@ tree.txt
 .env/
 .envs/
 
+# LaTeX auxiliary files in specific directories
+ChatGPT/*.aux
+ChatGPT/*.log
+ChatGPT/*.out
+ChatGPT/*.toc
+ChatGPT/*.fdb_latexmk
+ChatGPT/*.fls
+ChatGPT/*.synctex.gz
+
+Claude/*.aux
+Claude/*.log
+Claude/*.out
+Claude/*.toc
+Claude/*.fdb_latexmk
+Claude/*.fls
+Claude/*.synctex.gz
+
+Gemini/*.aux
+Gemini/*.log
+Gemini/*.out
+Gemini/*.toc
+Gemini/*.fdb_latexmk
+Gemini/*.fls
+Gemini/*.synctex.gz
+
 # Section 2--------------------------------------------------
 # Created by gitignore.io
 # Created by https://www.toptal.com/developers/gitignore/api/python,jupyternotebooks,venv,visualstudiocode,windows,macos,linux
